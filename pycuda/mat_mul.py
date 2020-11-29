@@ -32,7 +32,10 @@ def mul(mat1, mat2, out):
   mat_mul = mod.get_function("mat_mul")
   mat_mul(mat1_gpu, mat2_gpu, out_gpu, block=(3, 3, 1))
   cuda.memcpy_dtoh(out, out_gpu)
-
+  # free memory
+  mat1_gpu.free()
+  mat2_gpu.free()
+  out_gpu.free()
   return out
 
 def main():
