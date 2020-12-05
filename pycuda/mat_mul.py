@@ -27,10 +27,10 @@ def mul(mat1, mat2, out):
     }
   """ % {"ROWS": ROWS,
          "COLS": COLS}
-  
+
   mod = SourceModule(ker)
   mat_mul = mod.get_function("mat_mul")
-  mat_mul(mat1_gpu, mat2_gpu, out_gpu, block=(3, 3, 1))
+  mat_mul(mat1_gpu, mat2_gpu, out_gpu, block=(ROWS, COLS, 1))
   cuda.memcpy_dtoh(out, out_gpu)
   # free memory
   mat1_gpu.free()
@@ -42,9 +42,9 @@ def main():
   mat1 = np.array([[3, 5, 1],
                    [6, 1, 4],
                    [8, 5, 2]]).astype(np.float32)
-  mat2 = np.array([[6, 3, 1],
-                   [7, 4, 4],
-                   [2, 2, 4]]).astype(np.float32)
+  mat2 = np.array([[6, 3, 1, 3],
+                   [7, 4, 4, 2],
+                   [2, 2, 4, 1]]).astype(np.float32)
   out = np.empty(shape=(mat1.shape[0], mat2.shape[1])).astype(np.float32)
   
   out = mul(mat1, mat2, out)
