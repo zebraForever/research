@@ -1,9 +1,9 @@
 import numpy as np
 import unittest 
 import random
-
+import src
 from numpy import testing 
-from mat_mul import mul
+from src.mat_mul import mul
 
 class TestMatMul(unittest.TestCase):
   @staticmethod
